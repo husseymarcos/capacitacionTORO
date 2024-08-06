@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthService } from './modules/auth/auth.service';
@@ -10,24 +10,19 @@ import { AuthService } from './modules/auth/auth.service';
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
-    SequelizeModule.forRoot({
-      dialect: 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      username: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      autoLoadModels: true, 
-      synchronize: true,    
-      ssl: true,            
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false, 
-        },
-      },
-      logging: console.log, 
-      models: [],       
+    SequelizeModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        dialect: 'postgres',
+        host: configService.get('DATABASE_HOST'),
+        port: +configService.get('DATABASE_PORT'),
+        username: configService.get('DATABASE_USER'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_NAME'),
+        ssl: false,
+        models: [],
+      }),
+      inject: [ConfigService],
     }),
     UsersModule,
     AuthModule,
