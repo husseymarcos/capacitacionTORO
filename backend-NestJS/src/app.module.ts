@@ -1,35 +1,28 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UsersModule } from './modules/users/users.module';
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './modules/users/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { AuthService } from './modules/auth/auth.service';
-import { UsersService } from './modules/users/users.service';
+import { User } from './modules/users/user.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    SequelizeModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        dialect: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: +configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USER'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
-        ssl: false,
-        models: [],
-      }),
-      inject: [ConfigService],
+    SequelizeModule.forRoot({
+      dialect: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '123',
+      database: 'postgres',
+      ssl: false,
+      models: [User],
     }),
-    UsersModule,
+    UserModule,
     AuthModule,
   ],
-  providers: [AuthService, UsersService],
+  providers: [],
 })
 export class AppModule {}
-
-

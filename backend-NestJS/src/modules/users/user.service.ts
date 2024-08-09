@@ -1,11 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { CreateUserDto } from './createUser.dto';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
-    @Inject('USERS_REPOSITORY')
+    @InjectModel(User)
     private usersRepository: typeof User,
   ) {}
 
