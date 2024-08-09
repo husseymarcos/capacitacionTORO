@@ -1,21 +1,16 @@
 import { Table, Column, Model } from 'sequelize-typescript';
 
-
 @Table
 export class User extends Model {
-    
-    @Column
-    name: String
+  @Column
+  name: string;
 
-    @Column
-    lastName: String
+  @Column
+  lastName: string;
 
-    @Column
-    email: String
+  @Column
+  email: string;
 
-    @Column
-    password: String
-
-
-
+  @Column
+  password: string;
 }

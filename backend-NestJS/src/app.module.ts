@@ -4,11 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthService } from './modules/auth/auth.service';
+import { UsersService } from './modules/users/users.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, 
+      isGlobal: true,
     }),
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
@@ -27,6 +28,8 @@ import { AuthService } from './modules/auth/auth.service';
     UsersModule,
     AuthModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, UsersService],
 })
 export class AppModule {}
+
+
