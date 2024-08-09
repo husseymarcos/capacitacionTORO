@@ -9,6 +9,8 @@ import {
 
 @Table
 export class User extends Model<User> {
+
+
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -25,4 +27,15 @@ export class User extends Model<User> {
 
   @Column
   password: string;
+
+
+  constructor(createUserDto?: Partial<User>) {
+    super();
+    if (createUserDto) {
+      this.name = createUserDto.name;
+      this.lastName = createUserDto.lastName;
+      this.email = createUserDto.email;
+      this.password = createUserDto.password;
+    }
+  }
 }
