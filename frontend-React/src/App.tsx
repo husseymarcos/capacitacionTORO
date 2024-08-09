@@ -1,21 +1,19 @@
 import React from 'react';
-import RegisterForm from './components/auth/RegisterForm';
-import LoginForm from './components/auth/LoginForm';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/pages/Home';
+import SignUp from './components/auth/SignUp';
+import SignIn from './components/auth/SignIn';
 
-const App: React.FC = () => {
-  return (
-      <div>
-        <h1>User Registration and Login</h1>
-        <div>
-          <h2>Register</h2>
-          <RegisterForm />
-        </div>
-        <div>
-          <h2>Login</h2>
-          <LoginForm />
-        </div>
-      </div>
-  );
-};
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/sign-in" element={<SignIn />} />
+            </Routes>
+        </Router>
+    );
+}
 
 export default App;
