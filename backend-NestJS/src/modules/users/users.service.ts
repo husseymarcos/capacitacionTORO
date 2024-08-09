@@ -9,18 +9,13 @@ export class UsersService {
     private usersRepository: typeof User,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return this.usersRepository.findAll<User>();
-  }
-
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const { username, email, password } = createUserDto;
+    const { name, lastName, email, password } = createUserDto;
     const user = new User();
-    user.name = username;
-    user.lastName = email;
+    user.name = name;
+    user.lastName = lastName;
     user.email = email;
     user.password = password;
     return await this.usersRepository.create(user);
   }
-
 }
