@@ -1,21 +1,21 @@
-function App() {
+import React from 'react';
+import RegisterForm from './components/auth/RegisterForm';
+import LoginForm from './components/auth/LoginForm';
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <h1>User Registration and Login</h1>
+        <div>
+          <h2>Register</h2>
+          <RegisterForm />
+        </div>
+        <div>
+          <h2>Login</h2>
+          <LoginForm />
+        </div>
+      </div>
   );
-}
+};
 
 export default App;
