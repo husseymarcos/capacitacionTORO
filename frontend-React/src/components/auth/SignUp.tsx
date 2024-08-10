@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {registerUser} from "../../services/api";
 
 const defaultTheme = createTheme();
 
@@ -20,26 +19,43 @@ export default function SignUp() {
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
         setIsSubmitting(true);
         setError(null);
 
         const data = new FormData(event.currentTarget);
+
         const userData = {
-            firstName: data.get('firstName') as string,
-            lastName: data.get('lastName') as string,
-            email: data.get('email') as string,
-            password: data.get('password') as string,
+            name: data.get('firstName')?.toString() || '',
+            lastName: data.get('lastName')?.toString() || '',
+            email: data.get('email')?.toString() || '',
+            password: data.get('password')?.toString() || '',
         };
 
+        if (!userData.name || !isNaN(Number(userData.name))) {
+            setError('Please insert a valid first name.');
+            setIsSubmitting(false);
+            return;
+        }
+
+        if (!userData.lastName || !isNaN(Number(userData.lastName))) {
+            setError('Please insert a valid last name.');
+            setIsSubmitting(false);
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(userData.email)) {
+            setError('Please enter a valid email address.');
+            setIsSubmitting(false);
+            return;
+        }
+
         try {
-            await fetch('http://localhost:3001/api/users/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
+            await registerUser(userData)
+        } catch (error) {
+            setError('Failed to create user');
         } finally {
             setIsSubmitting(false);
         }
@@ -105,12 +121,6 @@ export default function SignUp() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions, and updates via email."
                                 />
                             </Grid>
                         </Grid>

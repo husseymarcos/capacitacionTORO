@@ -12,14 +12,19 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type,Authorization',
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }),
+  );
 
   const port = 3001;
 
   const sequelize = app.get<Sequelize>(Sequelize);
 
   await sequelize
-    .sync({ alter: true })
+    .sync()
     .then(() => console.log('Database & tables synchronized'))
     .catch((err) => console.error('Error synchronizing database:', err));
 
