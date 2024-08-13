@@ -32,33 +32,16 @@ export default function Register() {
             password: data.get('password')?.toString() || '',
         };
 
-        if (!userData.name || !isNaN(Number(userData.name))) {
-            setError('Please insert a valid first name.');
-            setIsSubmitting(false);
-            return;
-        }
-
-        if (!userData.lastName || !isNaN(Number(userData.lastName))) {
-            setError('Please insert a valid last name.');
-            setIsSubmitting(false);
-            return;
-        }
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(userData.email)) {
-            setError('Please enter a valid email address.');
-            setIsSubmitting(false);
-            return;
-        }
-
         try {
             await registerUser(userData);
             alert('User registered successfully!');
         } catch (error: any) {
-            const hasErrorMessage = error.response && error.response.data
-            if (hasErrorMessage) {
-                const message = error.response.data.message || 'An unknown error occurred';
-                setError(message);
+            if (error.response && error.response.data) {
+                const errorMessage = Array.isArray(error.response.data.errors)
+                  ? error.response.data.errors[0]
+                  : error.response.data.message || 'An unknown error occurred';
+
+                setError(errorMessage);
             } else {
                 console.error(error);
                 setError('Failed to create user.');
@@ -67,6 +50,7 @@ export default function Register() {
             setIsSubmitting(false);
         }
     };
+
 
     return (
       <ThemeProvider theme={defaultTheme}>

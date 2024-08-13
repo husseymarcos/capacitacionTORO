@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   UnauthorizedException,
@@ -8,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
 import { User } from '../users/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,14 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: RegisterDto): Promise<User> {
+    const errors = await validate(createUserDto);
+    if (errors.length > 0) {
+      const errorMessages = errors
+        .map((err) => Object.values(err.constraints))
+        .flat();
+      throw new BadRequestException({ errors: errorMessages });
+    }
+
     const existingUser = await this.usersService.findByEmail(
       createUserDto.email,
     );
