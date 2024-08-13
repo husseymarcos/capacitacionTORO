@@ -14,4 +14,8 @@ export class UserService {
     const user = new User(createUserDto);
     return await this.usersRepository.create(user);
   }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({ where: { email } });
+  }
 }
