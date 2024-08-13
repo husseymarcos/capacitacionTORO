@@ -11,13 +11,20 @@ export class AuthService {
     private usersService: UserService,
     private jwtService: JwtService,
     @InjectModel(User)
-    private usersRepository: typeof User,
+    private userRepository: typeof User,
   ) {}
+
+  async register(createUserDto: RegisterDto): Promise<User> {
+    const user = new User(createUserDto);
+    return await this.userRepository.create(user);
+  }
 
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findByEmail(email);
 
-    if (user?.password !== pass) {
+    const userPassword = user?.password;
+
+    if (userPassword !== pass) {
       throw new UnauthorizedException();
     }
 
@@ -26,10 +33,5 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
-  }
-
-  async register(createUserDto: RegisterDto): Promise<User> {
-    const user = new User(createUserDto);
-    return await this.usersRepository.create(user);
   }
 }

@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Post,
-  HttpCode,
   HttpStatus,
   HttpException,
 } from '@nestjs/common';
@@ -20,18 +19,18 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @HttpCode(HttpStatus.OK)
-  @Post('login')
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
-  }
-
   @Post('/register')
-  async createUser(@Body() createUserDto: RegisterDto): Promise<User> {
+  async register(@Body() createUserDto: RegisterDto): Promise<User> {
     try {
       return await this.authService.register(createUserDto);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @Public()
+  @Post('/login')
+  signIn(@Body() signInDto: SignInDto) {
+    return this.authService.signIn(signInDto.email, signInDto.password);
   }
 }
