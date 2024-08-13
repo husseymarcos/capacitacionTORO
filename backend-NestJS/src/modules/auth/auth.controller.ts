@@ -6,9 +6,9 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignInDto } from './singIn.dto';
+import { SignInDto } from './dto/singIn.dto';
 import { SetMetadata } from '@nestjs/common';
-import { RegisterDto } from '../users/register.dto';
+import { RegisterDto } from './dto/register.dto';
 import { User } from '../users/user.entity';
 
 export const IS_PUBLIC_KEY = 'isPublic';

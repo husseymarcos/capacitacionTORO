@@ -66,7 +66,7 @@ export default function SignIn() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="/SignUp" variant="body2">
+                                <Link href="/frontend-React/src/components/auth/Register" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
                             </Grid>

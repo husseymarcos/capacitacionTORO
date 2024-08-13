@@ -1,7 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterDto } from '../users/register.dto';
+import { RegisterDto } from './dto/register.dto';
 import { User } from '../users/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
 
@@ -15,6 +19,14 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: RegisterDto): Promise<User> {
+    const existingUser = await this.usersService.findByEmail(
+      createUserDto.email,
+    );
+
+    if (existingUser) {
+      throw new ConflictException('Email is already registered');
+    }
+
     const user = new User(createUserDto);
     return await this.userRepository.create(user);
   }
