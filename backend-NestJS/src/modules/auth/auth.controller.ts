@@ -4,19 +4,16 @@ import {
   Post,
   HttpCode,
   HttpStatus,
-  UseGuards,
-  Get,
-  Request,
+  HttpException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
 import { SignInDto } from './singIn.dto';
 import { SetMetadata } from '@nestjs/common';
+import { RegisterDto } from '../users/register.dto';
+import { User } from '../users/user.entity';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
-
-// Deberia tener el registrar aca tambien
 
 @Controller('api/auth')
 export class AuthController {
@@ -29,9 +26,12 @@ export class AuthController {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  @Post('/register')
+  async createUser(@Body() createUserDto: RegisterDto): Promise<User> {
+    try {
+      return await this.authService.register(createUserDto);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
