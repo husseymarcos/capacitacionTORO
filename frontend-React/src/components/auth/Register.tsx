@@ -68,7 +68,7 @@ export default function Register() {
                       <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                      Sign Up
+                      Register new Account
                   </Typography>
                   <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                       <Grid container spacing={2}>
