@@ -14,7 +14,7 @@ export class RegisterDto {
   email: string;
 
   @IsNotEmpty({ message: 'Password should not be empty' })
-  @IsString({ message: 'Password must be a string' })
+  @IsString({ message: 'Insert a valid password' })
   @Length(3, undefined, { message: 'Password must be at least 3 characters long' })
   password: string;
 }
