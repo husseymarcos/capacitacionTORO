@@ -19,6 +19,8 @@ import { User } from './modules/users/user.entity';
       database: 'postgres',
       ssl: false,
       models: [User],
+      autoLoadModels: true,
+      synchronize: true,
     }),
     UserModule,
     AuthModule,

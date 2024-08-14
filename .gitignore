@@ -102,7 +102,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
@@ -131,4 +130,5 @@ dist
 
 .idea
 .vscode
-constants.ts
+
+backend-NestJS/src/modules/auth/constants.ts

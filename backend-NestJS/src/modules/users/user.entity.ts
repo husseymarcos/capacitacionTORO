@@ -9,8 +9,6 @@ import {
 
 @Table
 export class User extends Model<User> {
-
-
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -27,7 +25,6 @@ export class User extends Model<User> {
 
   @Column
   password: string;
-
 
   constructor(createUserDto?: Partial<User>) {
     super();
