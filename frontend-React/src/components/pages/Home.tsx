@@ -1,28 +1,22 @@
-// src/pages/Home.tsx
 import React from 'react';
 import { Container, Typography, Box, Grid } from '@mui/material';
 import FeatureCard from '../pages/FeatureCard';
 import Footer from '../pages/Footer';
+import '../styles/Home.css'; 
 
 const Home: React.FC = () => {
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh'
-            }}
-        >
+        <Box className="home-container">
             <Container maxWidth="lg">
                 <Box py={6}>
-                    <Typography variant="h2" gutterBottom align="center">
-                        Welcome to Your To-Do List App
+                    <Typography variant="h2" className="home-title" gutterBottom>
+                        Welcome to Your Daily To-Do List
                     </Typography>
-                    <Typography variant="h5" paragraph align="center">
+                    <Typography variant="h5" className="home-subtitle" paragraph>
                         Organize your tasks efficiently and stay on top of your goals with our easy-to-use to-do list app.
                     </Typography>
-                    <Box my={6}>
-                        <Grid container spacing={4} justifyContent="center">
+                    <Box className="feature-card-grid">
+                        <Grid container spacing={4} className="feature-card-item">
                             <Grid item xs={12} sm={6} md={4}>
                                 <FeatureCard
                                     title="Create and Manage Tasks"
