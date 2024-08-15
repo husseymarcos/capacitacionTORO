@@ -1,25 +1,24 @@
 import React from 'react';
 import { Paper, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import '../styles/FeatureCard.css';
 
-interface FeatureCardProps {
+const FeatureCard: React.FC<{
     title: string;
     description: string;
     buttonText: string;
     buttonLink: string;
     buttonColor: 'primary' | 'secondary';
-}
-
-const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, buttonText, buttonLink, buttonColor }) => {
+}> = ({ title, description, buttonText, buttonLink, buttonColor }) => {
     return (
-        <Paper elevation={3} style={{ padding: '20px', textAlign: 'center', borderRadius: '8px' }}>
-            <Typography variant="h6" gutterBottom>
+        <Paper className="feature-card" elevation={3}>
+            <Typography className="feature-card-title" variant="h6" gutterBottom>
                 {title}
             </Typography>
-            <Typography paragraph>
+            <Typography className="feature-card-description" paragraph>
                 {description}
             </Typography>
-            <Button variant="contained" color={buttonColor} component={Link} to={buttonLink}>
+            <Button className="feature-card-button" variant="contained" color={buttonColor} component={Link} to={buttonLink}>
                 {buttonText}
             </Button>
         </Paper>
