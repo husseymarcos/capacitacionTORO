@@ -29,7 +29,7 @@ export class AuthController {
   }
 
   @Public()
-  @Post('/login')
+  @Post('/signIn')
   signIn(@Body() signInDto: SignInDto) {
 
     const email = signInDto.email;
