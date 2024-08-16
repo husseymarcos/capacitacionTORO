@@ -41,15 +41,17 @@ export default function SignIn() {
         setLoading(true);
     
         try {
+
             const response = await signIn({ email, password });
     
-            const { token } = response.data;
+            const { access_token } = response.data;
+
+            console.log(access_token)
     
-            localStorage.setItem('jwtToken', token);
-    
-            toast.success('Sign in successful!');
-    
+            localStorage.setItem('jwtToken', access_token);
+                
             navigate('/todo-list');
+
         } catch (error) {
             toast.error('Sign in failed. Please check your credentials.');
         } finally {
