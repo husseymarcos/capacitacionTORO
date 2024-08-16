@@ -9,14 +9,21 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
+import { signIn } from '../../services/api';
+
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
     const location = useLocation();
+    const navigate = useNavigate(); 
+
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         const query = new URLSearchParams(location.search);
@@ -25,20 +32,37 @@ export default function SignIn() {
         }
     }, [location]);
 
+    const handleBack = () => {
+        navigate(-1);  
+    };
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        setLoading(true);
+
+        try {
+            const response = await signIn({ email, password });
+            toast.success('Sign in successful!');
+            navigate('/home'); // Adjust the path as needed
+        } catch (error) {
+            toast.error('Sign in failed. Please check your credentials.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
       <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">
               <CssBaseline />
-              <Box 
-                className="container"
-              >
+              <Box className="container">
                   <Avatar className="avatar">
                       {/* Your avatar icon */}
                   </Avatar>
                   <Typography component="h1" variant="h5">
                       Sign In
                   </Typography>
-                  <Box component="form" noValidate className="form">
+                  <Box component="form" noValidate className="form" onSubmit={handleSubmit}>
                       <Grid container spacing={2}>
                           <Grid item xs={12}>
                               <TextField
@@ -48,6 +72,8 @@ export default function SignIn() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                               />
                           </Grid>
                           <Grid item xs={12}>
@@ -59,6 +85,8 @@ export default function SignIn() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                               />
                           </Grid>
                       </Grid>
@@ -68,8 +96,19 @@ export default function SignIn() {
                         variant="contained"
                         className="submit-button"
                         sx={{ mt: 2 }} 
+                        disabled={loading}  
                       >
-                          Sign In
+                          {loading ? 'Signing In...' : 'Sign In'}
+                      </Button>
+                      <Button
+                        type="button"
+                        fullWidth
+                        variant="outlined"
+                        className="back-button"
+                        sx={{ mt: 2, mb: 2 }} 
+                        onClick={handleBack}
+                      >
+                          Back
                       </Button>
                       <Grid container justifyContent="center" className="register-link" sx={{ mt: 2 }} >
                           <Grid item>
