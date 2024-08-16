@@ -20,7 +20,7 @@ interface Todo {
 
 export const getUserTodos = async (userId: number, token: string): Promise<Todo[]> => {
     try {
-        const response = await axios.get(`/data/${userId}`, {
+        const response = await axios.get(`/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

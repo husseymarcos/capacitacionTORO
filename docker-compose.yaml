@@ -15,15 +15,6 @@ services:
     build: ./backend-NestJS
     container_name: nestjs_backend
     command: npm run start:dev 
-    develop:
-      watch: 
-        - action: rebuild
-          path: ./backend-NestJS/src
-          target: /src/backend
-          ignore: 
-            - node_modules/
-        - action: rebuild
-          path: package.json
     environment:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
@@ -41,15 +32,6 @@ services:
     build: ./frontend-React
     container_name: react_frontend
     command: npm start 
-    develop:
-      watch: 
-        - action: rebuild
-          path: ./frontend-React/src
-          target: /src/frontend
-          ignore: 
-            - node_modules/
-        - action: rebuild
-          path: package.json
     ports:
       - "3000:3000"
     depends_on:

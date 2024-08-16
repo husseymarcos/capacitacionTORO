@@ -2,7 +2,6 @@ import { Controller, Post, Body, Get, Param, Put, Delete, HttpException, HttpSta
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from './todo.entity';
 import { TodoService } from './todo.service';
-import { Public } from '../auth/auth.controller';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @Controller('api/todos')
