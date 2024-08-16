@@ -23,6 +23,8 @@ services:
       DATABASE_NAME: postgres
     ports:
       - "3001:3001"
+    volumes:
+      - ./backend-NestJS:/usr/src/app
     depends_on:
       - postgres
 

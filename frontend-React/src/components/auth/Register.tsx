@@ -13,7 +13,7 @@ import { registerUser } from "../../services/api";
 import ListIcon from '@mui/icons-material/List';
 import '../styles/Register.css'; 
 import { useNavigate } from 'react-router-dom'; 
-import { toast, ToastContainer } from 'react-toastify'; 
+import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 
 const defaultTheme = createTheme();
