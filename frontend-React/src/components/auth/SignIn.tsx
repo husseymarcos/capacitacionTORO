@@ -39,17 +39,24 @@ export default function SignIn() {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
-
+    
         try {
             const response = await signIn({ email, password });
+    
+            const { token } = response.data;
+    
+            localStorage.setItem('jwtToken', token);
+    
             toast.success('Sign in successful!');
-            navigate('/home'); // Adjust the path as needed
+    
+            navigate('/todo-list');
         } catch (error) {
             toast.error('Sign in failed. Please check your credentials.');
         } finally {
             setLoading(false);
         }
     };
+    
 
     return (
       <ThemeProvider theme={defaultTheme}>
