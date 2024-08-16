@@ -33,4 +33,4 @@ Use Docker Compose to build and start the application:
 
 
 ```bash
-docker-compose up --build
+docker compose up
