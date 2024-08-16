@@ -26,11 +26,15 @@ Where mySuperSecreyKey must be generated
 For example: https://jwtsecret.com/
 
 
-### **Step 3: Build and Start the Application**
+### 3. Build and Start the Application**
 
 
 Use Docker Compose to build and start the application:
 
 
 ```bash
-docker-compose up --build
+docker compose up
+```
+
+### 4. Access the Application
+Open your browser and navigate to [http://localhost:3000/](http://localhost:3000/) to use the application.
