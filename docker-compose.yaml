@@ -18,7 +18,7 @@ services:
     develop:
       watch: 
         - action: sync
-          path: ./src
+          path: ./nestjs_backend/src
           target: /src/backend
           ignore: 
             - node_modules/
@@ -45,7 +45,7 @@ services:
     develop:
       watch: 
         - action: sync
-          path: ./src
+          path: ./react_frontend/src
           target: /src/frontend
           ignore: 
             - node_modules/
