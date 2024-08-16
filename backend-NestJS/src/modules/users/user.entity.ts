@@ -5,7 +5,10 @@ import {
   AutoIncrement,
   DataType,
   PrimaryKey,
+  HasMany
 } from 'sequelize-typescript';
+
+import { Todo } from '../todo/todo.entity';
 
 @Table
 export class User extends Model<User> {
@@ -26,6 +29,9 @@ export class User extends Model<User> {
   @Column
   password: string;
 
+  @HasMany(() => Todo)
+  todos: Todo[];
+
   constructor(createUserDto?: Partial<User>) {
     super();
     if (createUserDto) {
@@ -33,6 +39,7 @@ export class User extends Model<User> {
       this.lastName = createUserDto.lastName;
       this.email = createUserDto.email;
       this.password = createUserDto.password;
+      this.todos = []
     }
   }
 }
