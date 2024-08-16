@@ -9,19 +9,19 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLocation } from 'react-router-dom'; // Import useLocation
-import { toast, ToastContainer } from 'react-toastify'; // Import Toastify components
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify styles
+import { useLocation } from 'react-router-dom'; 
+import { toast, ToastContainer } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const location = useLocation(); // Access the location object to get query parameters
+    const location = useLocation();
 
     React.useEffect(() => {
         const query = new URLSearchParams(location.search);
         if (query.get('registered') === 'true') {
-            toast.success('Registration successful! You can now sign in.'); // Show success toast
+            toast.success('Registration successful! You can now sign in.'); 
         }
     }, [location]);
 
@@ -71,7 +71,7 @@ export default function SignIn() {
                       >
                           Sign In
                       </Button>
-                      <Grid container justifyContent="center" className="register-link">
+                      <Grid container justifyContent="center" className="register-link" sx={{ mt: 2 }} >
                           <Grid item>
                               <Link href="/sign-up" variant="body2">
                                   Don't have an account? Register
@@ -80,7 +80,7 @@ export default function SignIn() {
                       </Grid>
                   </Box>
               </Box>
-              <ToastContainer position="top-center" /> {/* Add ToastContainer to render toasts */}
+              <ToastContainer position="top-center" /> {}
           </Container>
       </ThemeProvider>
     );

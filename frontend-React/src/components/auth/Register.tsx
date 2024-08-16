@@ -12,16 +12,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { registerUser } from "../../services/api";
 import ListIcon from '@mui/icons-material/List';
 import '../styles/Register.css'; 
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { toast, ToastContainer } from 'react-toastify'; // Import Toastify components
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify styles
+import { useNavigate } from 'react-router-dom'; 
+import { toast, ToastContainer } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const defaultTheme = createTheme();
 
 export default function Register() {
     const [error, setError] = React.useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -39,7 +39,7 @@ export default function Register() {
 
         try {
             await registerUser(userData);
-            navigate('/sign-in?registered=true'); // Redirect with a query parameter
+            navigate('/sign-in?registered=true'); 
         } catch (error: any) {
             if (error.response && error.response.data) {
                 const errorMessage = Array.isArray(error.response.data.errors)
@@ -57,7 +57,7 @@ export default function Register() {
     };
 
     const handleBack = () => {
-        navigate(-1); // Go back to the previous page
+        navigate(-1); 
     };
 
     return (
@@ -137,7 +137,7 @@ export default function Register() {
                       >
                         Back
                       </Button>
-                      <Grid container justifyContent="center" className="signin-link">
+                      <Grid container justifyContent="center" className="signin-link" sx={{ mt: 2 }} >
                           <Grid item>
                               <Link href="/sign-in" variant="body2">
                                   Already have an account? Sign in
@@ -146,7 +146,7 @@ export default function Register() {
                       </Grid>
                   </Box>
               </Box>
-              <ToastContainer position="top-center" /> {/* Add ToastContainer to render toasts */}
+              <ToastContainer position="top-center" /> {}
           </Container>
       </ThemeProvider>
     );
