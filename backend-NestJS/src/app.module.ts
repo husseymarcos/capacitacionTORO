@@ -5,6 +5,8 @@ import { UserModule } from './modules/users/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { User } from './modules/users/user.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { TodoModule } from './modules/todo/todo.module';
+import { Todo } from './modules/todo/todo.entity';
 
 @Module({
   imports: [
@@ -27,12 +29,13 @@ import { JwtModule } from '@nestjs/jwt';
       password: '123',
       database: 'postgres',
       ssl: false,
-      models: [User],
+      models: [User,Todo],
       autoLoadModels: true,
       synchronize: true,
     }),
     UserModule,
     AuthModule,
+    TodoModule
   ],
   providers: [],
 })
