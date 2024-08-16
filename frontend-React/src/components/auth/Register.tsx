@@ -13,6 +13,8 @@ import { registerUser } from "../../services/api";
 import ListIcon from '@mui/icons-material/List';
 import '../styles/Register.css'; 
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { toast, ToastContainer } from 'react-toastify'; // Import Toastify components
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify styles
 
 const defaultTheme = createTheme();
 
@@ -37,8 +39,7 @@ export default function Register() {
 
         try {
             await registerUser(userData);
-            alert('User registered successfully!');
-            navigate('/sign-in'); // Redirect to sign-in page after successful registration
+            navigate('/sign-in?registered=true'); // Redirect with a query parameter
         } catch (error: any) {
             if (error.response && error.response.data) {
                 const errorMessage = Array.isArray(error.response.data.errors)
@@ -145,6 +146,7 @@ export default function Register() {
                       </Grid>
                   </Box>
               </Box>
+              <ToastContainer position="top-center" /> {/* Add ToastContainer to render toasts */}
           </Container>
       </ThemeProvider>
     );

@@ -4,95 +4,84 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import '../styles/SignIn.css';
-import ListIcon from '@mui/icons-material/List';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useLocation } from 'react-router-dom'; // Import useLocation
+import { toast, ToastContainer } from 'react-toastify'; // Import Toastify components
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify styles
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const navigate = useNavigate(); // Initialize useNavigate hook
+    const location = useLocation(); // Access the location object to get query parameters
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-    };
-
-    const handleBack = () => {
-        navigate(-1); // Go back to the previous page
-    };
+    React.useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        if (query.get('registered') === 'true') {
+            toast.success('Registration successful! You can now sign in.'); // Show success toast
+        }
+    }, [location]);
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                    className="signin-container"
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <ListIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5" sx={{ marginTop: 1 }}>
-                        Sign In
-                    </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} className="signin-form">
-                        <TextField
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            margin="normal"
-                        />
-                        <TextField
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            margin="normal"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            className="signin-button"
-                            sx={{ mt: 2 }} 
-                        >
-                            Sign In
-                        </Button>
-                        <Button
-                            fullWidth
-                            variant="outlined"
-                            className="back-button"
-                            onClick={handleBack}
-                            sx={{ mt: 2 }} 
-                        >
-                            Back
-                        </Button>
-                        <Grid container className="signin-link">
-                            <Grid item>
-                                <Link href="/sign-up" variant="body2">
-                                    Don't have an account? Sign Up
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-            </Container>
-        </ThemeProvider>
+      <ThemeProvider theme={defaultTheme}>
+          <Container component="main" maxWidth="xs">
+              <CssBaseline />
+              <Box 
+                className="container"
+              >
+                  <Avatar className="avatar">
+                      {/* Your avatar icon */}
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                      Sign In
+                  </Typography>
+                  <Box component="form" noValidate className="form">
+                      <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                              <TextField
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                              />
+                          </Grid>
+                          <Grid item xs={12}>
+                              <TextField
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                              />
+                          </Grid>
+                      </Grid>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        className="submit-button"
+                        sx={{ mt: 2 }} 
+                      >
+                          Sign In
+                      </Button>
+                      <Grid container justifyContent="center" className="register-link">
+                          <Grid item>
+                              <Link href="/sign-up" variant="body2">
+                                  Don't have an account? Register
+                              </Link>
+                          </Grid>
+                      </Grid>
+                  </Box>
+              </Box>
+              <ToastContainer position="top-center" /> {/* Add ToastContainer to render toasts */}
+          </Container>
+      </ThemeProvider>
     );
 }
