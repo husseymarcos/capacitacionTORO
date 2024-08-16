@@ -18,20 +18,15 @@ interface Todo {
     description: string;
 }
 
-export const getUserTodos = async (userId: number, token: string): Promise<Todo[]> => {
-    try {
-        const response = await axios.get(`/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
-    } catch (error: unknown) {
-        if (axios.isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.message || 'Error fetching todos');
-        } else {
-            throw new Error('Error fetching todos');
-        }
-    }
-};
 
+export const getUserTodos = (userId: number, token: string): Promise<Todo[]> => {
+    console.log('Fetching todos for user:', userId); // Debugging line
+    return api.get('/todos', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        params: {
+            userId,
+        },
+    }).then(response => response.data);
+};

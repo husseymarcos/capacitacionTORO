@@ -9,11 +9,16 @@ import Box from '@mui/material/Box';
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 import { getUserTodos } from '../../services/api'; 
+import { jwtDecode } from "jwt-decode";
 
 interface Todo {
     id: number;
     title: string;
     description: string;
+}
+
+interface JwtPayload {
+    userId: number;
 }
 
 export default function Todos() {
@@ -29,14 +34,12 @@ export default function Todos() {
                     throw new Error('User not authenticated');
                 }
 
-                //
-                const userId = 1; // Replace with the actual user ID or retrieve it dynamically
-                //
+                const decoded: JwtPayload = jwtDecode(token)
+                const userId = decoded.userId;                
                 
                 const response = await getUserTodos(userId, token);
                 setTodos(response); 
             } catch (error: unknown) {
-            
                 if (error instanceof Error) {
                     setError(error.message);
                     toast.error(error.message);

@@ -46,8 +46,6 @@ export default function SignIn() {
     
             const { access_token } = response.data;
 
-            console.log(access_token)
-    
             localStorage.setItem('jwtToken', access_token);
                 
             navigate('/todo-list');

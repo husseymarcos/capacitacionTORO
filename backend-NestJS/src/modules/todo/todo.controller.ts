@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Delete, HttpException, HttpStatus, Request } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from './todo.entity';
 import { TodoService } from './todo.service';
@@ -14,8 +14,9 @@ export class TodoController {
         return await this.todoService.create(createTodoDto);
     }
 
-    @Get('/:userId')
-    async getTodosByUser(@Param('userId') userId: number): Promise<Todo[]> {
+    @Get()
+    async getTodos(@Request() req): Promise<Todo[]> {
+        const userId = req.user.userId; 
         return await this.todoService.findByUser(userId);
     }
 
