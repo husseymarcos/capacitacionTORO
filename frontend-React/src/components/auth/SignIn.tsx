@@ -68,7 +68,7 @@ export default function SignIn() {
                         </Button>
                         <Grid container className="signin-link">
                             <Grid item>
-                                <Link href="/frontend-React/src/components/auth/Register" variant="body2">
+                                <Link href="/sign-up" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
                             </Grid>

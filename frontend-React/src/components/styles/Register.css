@@ -1,0 +1,21 @@
+
+.container {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    margin: 8px;
+    background-color: var(--mui-color-secondary-main);
+}
+
+.form {
+    margin-top: 24px; /* 3 * 8px = 24px */
+}
+
+.submit-button {
+    margin-top: 16px;
+    margin-bottom: 16px; 
+}
