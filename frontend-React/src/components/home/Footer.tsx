@@ -1,23 +1,15 @@
 import React from 'react';
 import { Box, Typography, Container } from '@mui/material';
+import '../styles/Footer.css';
 
 const Footer: React.FC = () => {
     return (
-        <Box
-            component="footer"
-            sx={{
-                backgroundColor: '#f5f5f5',
-                padding: '20px 0',
-                textAlign: 'center',
-                marginTop: 'auto',
-                borderTop: '1px solid #e0e0e0'
-            }}
-        >
+        <Box component="footer" className="footer">
             <Container maxWidth="lg">
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" className="footer-text">
                     © {new Date().getFullYear()} Marcos Hussey. All rights reserved.
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" className="footer-text">
                     Contact: mhussey@mail.austral.edu.ar
                 </Typography>
             </Container>

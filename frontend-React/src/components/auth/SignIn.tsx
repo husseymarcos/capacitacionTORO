@@ -6,10 +6,11 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import '../styles/SignIn.css';
+import ListIcon from '@mui/icons-material/List';
 
 const defaultTheme = createTheme();
 
@@ -23,6 +24,7 @@ export default function SignIn() {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
+                    className="signin-container"
                     sx={{
                         marginTop: 8,
                         display: 'flex',
@@ -31,12 +33,12 @@ export default function SignIn() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                        <ListIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" sx={{ marginTop: 1 }}>
                         Sign In
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} className="signin-form">
                         <TextField
                             required
                             fullWidth
@@ -60,11 +62,11 @@ export default function SignIn() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            className="signin-button"
                         >
                             Sign In
                         </Button>
-                        <Grid container justifyContent="flex-end">
+                        <Grid container className="signin-link">
                             <Grid item>
                                 <Link href="/frontend-React/src/components/auth/Register" variant="body2">
                                     Don't have an account? Sign Up

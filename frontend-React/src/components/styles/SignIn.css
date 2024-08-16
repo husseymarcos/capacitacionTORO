@@ -1,0 +1,27 @@
+
+.signin-container {
+    margin-top: 64px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signin-avatar {
+    margin: 8px;
+    background-color: var(--mui-color-secondary-main);
+}
+
+.signin-form {
+    margin-top: 24px; 
+}
+
+.signin-button {
+    margin-top: 24px; 
+    margin-bottom: 16px; 
+}
+
+.signin-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
