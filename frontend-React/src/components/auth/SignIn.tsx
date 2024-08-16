@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 
@@ -17,6 +17,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
     const location = useLocation();
+    const navigate = useNavigate(); 
 
     React.useEffect(() => {
         const query = new URLSearchParams(location.search);
@@ -24,6 +25,10 @@ export default function SignIn() {
             toast.success('Registration successful! You can now sign in.'); 
         }
     }, [location]);
+
+    const handleBack = () => {
+        navigate(-1);  
+    };
 
     return (
       <ThemeProvider theme={defaultTheme}>
@@ -70,6 +75,16 @@ export default function SignIn() {
                         sx={{ mt: 2 }} 
                       >
                           Sign In
+                      </Button>
+                      <Button
+                        type="button"
+                        fullWidth
+                        variant="outlined"
+                        className="back-button"
+                        sx={{ mt: 2, mb: 2 }} 
+                        onClick={handleBack}
+                      >
+                          Back
                       </Button>
                       <Grid container justifyContent="center" className="register-link" sx={{ mt: 2 }} >
                           <Grid item>
