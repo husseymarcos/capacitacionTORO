@@ -11,12 +11,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../styles/SignIn.css';
 import ListIcon from '@mui/icons-material/List';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const navigate = useNavigate(); // Initialize useNavigate hook
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+    };
+
+    const handleBack = () => {
+        navigate(-1); // Go back to the previous page
     };
 
     return (
@@ -63,8 +70,18 @@ export default function SignIn() {
                             fullWidth
                             variant="contained"
                             className="signin-button"
+                            sx={{ mt: 2 }} 
                         >
                             Sign In
+                        </Button>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            className="back-button"
+                            onClick={handleBack}
+                            sx={{ mt: 2 }} 
+                        >
+                            Back
                         </Button>
                         <Grid container className="signin-link">
                             <Grid item>

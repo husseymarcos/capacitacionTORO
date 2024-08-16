@@ -12,12 +12,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { registerUser } from "../../services/api";
 import ListIcon from '@mui/icons-material/List';
 import '../styles/Register.css'; 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const defaultTheme = createTheme();
 
 export default function Register() {
     const [error, setError] = React.useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const navigate = useNavigate(); // Initialize navigate
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,6 +38,7 @@ export default function Register() {
         try {
             await registerUser(userData);
             alert('User registered successfully!');
+            navigate('/sign-in'); // Redirect to sign-in page after successful registration
         } catch (error: any) {
             if (error.response && error.response.data) {
                 const errorMessage = Array.isArray(error.response.data.errors)
@@ -52,18 +55,17 @@ export default function Register() {
         }
     };
 
+    const handleBack = () => {
+        navigate(-1); // Go back to the previous page
+    };
+
     return (
       <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">
               <CssBaseline />
               <Box 
-              className="container"
-              sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}>
+                className="container"
+              >
                   <Avatar className="avatar">
                       <ListIcon />
                   </Avatar>
@@ -121,11 +123,20 @@ export default function Register() {
                         variant="contained"
                         className="submit-button"
                         disabled={isSubmitting}
+                        sx={{ mt: 2 }} 
                       >
                           Sign Up
                       </Button>
-                      {error && <Typography color="error">{error}</Typography>}
-                      <Grid container justifyContent="center">
+                      {error && <Typography className="error-message">{error}</Typography>}
+                      <Button
+                        onClick={handleBack}
+                        variant="outlined"
+                        fullWidth
+                        sx={{ mt: 2 }} 
+                      >
+                        Back
+                      </Button>
+                      <Grid container justifyContent="center" className="signin-link">
                           <Grid item>
                               <Link href="/sign-in" variant="body2">
                                   Already have an account? Sign in
