@@ -31,9 +31,8 @@ export class AuthController {
   @Public()
   @Post('/signIn')
   signIn(@Body() signInDto: SignInDto) {
-
     const email = signInDto.email;
-    const password = signInDto.password
+    const password = signInDto.password;
 
     return this.authService.signIn(email, password);
   }

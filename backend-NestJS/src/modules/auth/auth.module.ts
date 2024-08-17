@@ -19,7 +19,7 @@ import { JwtStrategy } from './jwt/jwt.strategy';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET_KEY'),
-        signOptions: { expiresIn: '60s' }, 
+        signOptions: { expiresIn: '6h' },
       }),
     }),
   ],
@@ -28,7 +28,8 @@ import { JwtStrategy } from './jwt/jwt.strategy';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
-    }, JwtStrategy
+    },
+    JwtStrategy,
   ],
   controllers: [AuthController],
   exports: [AuthService],

@@ -1,18 +1,17 @@
 import {
-    Table,
-    Column,
-    Model,
-    AutoIncrement,
-    DataType,
-    PrimaryKey,
-    ForeignKey,
-    BelongsTo,
-  } from 'sequelize-typescript';
+  Table,
+  Column,
+  Model,
+  AutoIncrement,
+  DataType,
+  PrimaryKey,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
 import { User } from '../users/user.entity';
 
 @Table
 export class Todo extends Model<Todo> {
-
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -32,9 +31,6 @@ export class Todo extends Model<Todo> {
     defaultValue: false,
   })
   completed: boolean;
-
-  @Column(DataType.DATE)
-  dueDate: Date;
 
   @ForeignKey(() => User)
   @Column({

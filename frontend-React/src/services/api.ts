@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { CreateTodoDto, Todo, User } from './types';
+
 
 const api = axios.create({
     baseURL: 'http://localhost:3001/api',
@@ -11,12 +13,6 @@ export const registerUser = async (data: any) => {
 export const signIn = async (data: any) => {
     return api.post('/auth/signIn', data);
 };
-
-interface Todo {
-    id: number;
-    title: string;
-    description: string;
-}
 
 
 export const getUserTodos = async (userId: number, token: string): Promise<Todo[]> => {
@@ -32,19 +28,44 @@ export const getUserTodos = async (userId: number, token: string): Promise<Todo[
 };
 
 
-interface CreateTodoDto {
-    userId: number;
-    title: string;
-    description?: string;
-    completed: boolean;
-    dueDate: Date;
-}
-
 export const createTodo = async (data: CreateTodoDto, token: string) => {
     const response = await api.post('/todos/create', data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
+    return response.data;
+};
+
+export const updateTodo = async (id: number, data: Partial<CreateTodoDto>, token: string) => {
+    const response = await api.put(`/todos/edit`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        params: {
+            id,
+        },
+    });
+    return response.data;
+};
+
+export const deleteTodo = async (id: number, token: string) => {
+    const response = await api.delete(`/todos/delete`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        params: {
+            id,
+        },
+    });
+    return response.data;
+};
+
+export const getUserDetails = async (userId: number, token: string): Promise<User> => {
+    const response = await api.get(`/users/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return response.data;
 };

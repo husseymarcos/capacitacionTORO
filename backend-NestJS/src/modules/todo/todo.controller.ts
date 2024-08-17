@@ -6,8 +6,6 @@ import {
   Param,
   Put,
   Delete,
-  HttpException,
-  HttpStatus,
   Request,
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -30,7 +28,7 @@ export class TodoController {
     return await this.todoService.findByUser(userId);
   }
 
-  @Put('/:id')
+  @Put('/edit')
   async updateTodo(
     @Param('id') id: number,
     @Body() updateTodoDto: UpdateTodoDto,
@@ -38,7 +36,7 @@ export class TodoController {
     return await this.todoService.update(id, updateTodoDto);
   }
 
-  @Delete('/:id')
+  @Delete('/delete')
   async deleteTodo(@Param('id') id: number): Promise<void> {
     await this.todoService.delete(id);
   }
