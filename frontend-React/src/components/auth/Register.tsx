@@ -13,8 +13,9 @@ import { registerUser } from "../../services/api";
 import ListIcon from '@mui/icons-material/List';
 import '../styles/Register.css'; 
 import { useNavigate } from 'react-router-dom'; 
-import { ToastContainer } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css'; 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const defaultTheme = createTheme();
 
@@ -46,10 +47,10 @@ export default function Register() {
                   ? error.response.data.errors[0]
                   : error.response.data.message || 'An unknown error occurred';
 
-                setError(errorMessage);
+                toast.error(errorMessage);
             } else {
                 console.error(error);
-                setError('Failed to create user.');
+                toast.error('Failed to create user.');
             }
         } finally {
             setIsSubmitting(false);
