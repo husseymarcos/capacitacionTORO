@@ -7,9 +7,10 @@ interface TodoFormProps {
   onEdit: (todo: Todo) => void;
   editingTodo: Todo | null;
   userId: number;
+  onClose: () => void;
 }
 
-const TodoForm: React.FC<TodoFormProps> = ({ onCreate, onEdit, editingTodo, userId }) => {
+const TodoForm: React.FC<TodoFormProps> = ({ onCreate, onEdit, editingTodo, userId, onClose }) => {
   const [title, setTitle] = useState<string>(editingTodo?.title || '');
   const [description, setDescription] = useState<string>(editingTodo?.description || '');
   const [completed, setCompleted] = useState<boolean>(editingTodo?.completed || false);
@@ -36,6 +37,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onCreate, onEdit, editingTodo, user
     } else {
       onCreate(todo);
     }
+    onClose(); // Close form after submission
   };
 
   return (
@@ -63,6 +65,9 @@ const TodoForm: React.FC<TodoFormProps> = ({ onCreate, onEdit, editingTodo, user
       </Box>
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         {editingTodo ? 'Update To-Do' : 'Add To-Do'}
+      </Button>
+      <Button variant="outlined" color="secondary" onClick={onClose} style={{ marginLeft: '8px' }}>
+        Close
       </Button>
     </Box>
   );

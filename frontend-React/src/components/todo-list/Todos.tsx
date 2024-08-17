@@ -10,12 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getUserTodos, createTodo, updateTodo, deleteTodo, getUserDetails } from '../../services/api';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload, Todo, User } from '../../services/types';
 import TodoForm from './TodoForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function Todos() {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -24,6 +26,7 @@ export default function Todos() {
     const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [user, setUser] = useState<User | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -35,7 +38,6 @@ export default function Todos() {
 
                 const decoded: JwtPayload = jwtDecode(token);
                 const userId = decoded.userId;
-
 
                 const userDetails = await getUserDetails(userId, token);
                 setUser(userDetails);
@@ -123,6 +125,11 @@ export default function Todos() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('jwtToken');
+        navigate('/sign-in');
+    };
+
     if (loading) {
         return (
           <Container component="main" maxWidth="sm">
@@ -149,9 +156,12 @@ export default function Todos() {
               Hello, {user?.name || 'User'}
           </Typography>
 
-          <Box display="flex" justifyContent="flex-end" mb={2}>
+          <Box display="flex" justifyContent="space-between" mb={2}>
               <IconButton onClick={handleToggleForm}>
                   <AddIcon />
+              </IconButton>
+              <IconButton onClick={handleLogout}>
+                  <LogoutIcon />
               </IconButton>
           </Box>
 
@@ -161,6 +171,7 @@ export default function Todos() {
               onEdit={handleEditTodo}
               editingTodo={editingTodo}
               userId={user?.id || 0}
+              onClose={() => setIsFormVisible(false)} // Pass onClose prop
             />
           )}
 
