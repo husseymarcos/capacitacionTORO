@@ -12,7 +12,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend-NestJS
+    build: 
+      context: ./backend-NestJS
+      dockerfile: dockerfile
     container_name: nestjs_backend
     command: npm run start:dev 
     environment:
@@ -29,9 +31,10 @@ services:
       - postgres
 
   frontend:
-    build: ./frontend-React
+    build: 
+      context: ./frontend-React
+      dockerfile: dockerfile
     container_name: react_frontend
-    command: npm start 
     ports:
       - "3000:3000"
     depends_on:

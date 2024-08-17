@@ -19,14 +19,15 @@ interface Todo {
 }
 
 
-export const getUserTodos = (userId: number, token: string): Promise<Todo[]> => {
-    console.log('Fetching todos for user:', userId); // Debugging line
-    return api.get('/todos', {
+export const getUserTodos = async (userId: number, token: string): Promise<Todo[]> => {
+    console.log('Fetching todos for user:', userId); 
+    const response = await api.get('/todos/get', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
         params: {
             userId,
         },
-    }).then(response => response.data);
+    });
+    return response.data;
 };

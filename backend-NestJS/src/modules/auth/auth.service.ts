@@ -10,6 +10,7 @@ import { RegisterDto } from './dto/register.dto';
 import { User } from '../users/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { validate } from 'class-validator';
+import { identity } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -43,6 +44,7 @@ export class AuthService {
 
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findByEmail(email);
+    console.log("User: " + user)
 
     const userPassword = user?.password;
 
@@ -50,7 +52,14 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.id, email: user.email };
+    console.log(user.id)
+    console.log(user.get('id'))
+    console.log(user.getDataValue('id'))
+
+
+    const payload = { id: user.get('id'), email: user.email };
+
+    console.log('Signing in with payload:', payload);
 
     return {
       access_token: this.jwtService.sign(payload),

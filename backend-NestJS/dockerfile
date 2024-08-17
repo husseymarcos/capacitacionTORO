@@ -1,23 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18
+# Use Node.js image
+FROM node:18 AS build
 
 # Set the working directory in the container
-WORKDIR /toro-todo/backend-NestJS
+WORKDIR /app
 
-# Copy the package.json and package-lock.json files to the container
-COPY package.json .
+# Copy package.json and package-lock.json from the build context to the container
+COPY package.json package-lock.json ./
 
-# Install dependencies
+# Install dependencies including dev dependencies
 RUN npm install
 
-# Copy the rest of the application code to the container
+# Copy the rest of the application code
 COPY . .
-
-# Build the NestJS application
-RUN npm run build
 
 # Expose the port the app runs on
 EXPOSE 3001
 
-# Run the NestJS application
+# Start the NestJS application
 CMD ["npm", "run", "start:dev"]

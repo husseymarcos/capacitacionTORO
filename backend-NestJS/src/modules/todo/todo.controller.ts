@@ -14,7 +14,7 @@ export class TodoController {
         return await this.todoService.create(createTodoDto);
     }
 
-    @Get()
+    @Get('/get')
     async getTodos(@Request() req): Promise<Todo[]> {
         const userId = req.user.userId; 
         return await this.todoService.findByUser(userId);

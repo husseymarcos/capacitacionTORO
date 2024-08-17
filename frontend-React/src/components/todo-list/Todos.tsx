@@ -18,7 +18,8 @@ interface Todo {
 }
 
 interface JwtPayload {
-    userId: number;
+    id: number;
+    email: string;
 }
 
 export default function Todos() {
@@ -29,13 +30,16 @@ export default function Todos() {
     React.useEffect(() => {
         const fetchTodos = async () => {
             try {
+
                 const token = localStorage.getItem('jwtToken');
                 if (!token) {
                     throw new Error('User not authenticated');
                 }
-
+                
                 const decoded: JwtPayload = jwtDecode(token)
-                const userId = decoded.userId;                
+                console.log(decoded)
+                const userId = decoded.id;                
+                console.log('UserId:' + userId)
                 
                 const response = await getUserTodos(userId, token);
                 setTodos(response); 
