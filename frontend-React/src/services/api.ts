@@ -30,3 +30,25 @@ export const getUserTodos = async (userId: number, token: string): Promise<Todo[
     });
     return response.data;
 };
+
+
+interface CreateTodoDto {
+    userId: number;
+    title: string;
+    description?: string;
+    completed: boolean;
+    dueDate: Date;
+}
+
+export const createTodo = async (data: CreateTodoDto, token: string) => {
+    try {
+        const response = await axios.post('/api/todos/create', data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to create todo');
+    }
+};

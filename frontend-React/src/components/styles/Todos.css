@@ -1,0 +1,41 @@
+.container {
+    margin-top: 20px;
+    max-width: 600px;
+}
+
+.form-container {
+    margin-bottom: 30px;
+}
+
+.text-field {
+    margin-bottom: 15px;
+}
+
+.submit-button {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.todo-list {
+    margin-top: 20px;
+}
+
+.list-item {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.list-item:hover {
+    background-color: #f1f1f1;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.description {
+    color: #777;
+}
