@@ -127,7 +127,8 @@ export default function Todos() {
 
     const handleLogout = () => {
         localStorage.removeItem('jwtToken');
-        navigate('/sign-in');
+        toast.success('Successfully logged out!');
+        navigate('/sign-in?logout=true');
     };
 
     if (loading) {

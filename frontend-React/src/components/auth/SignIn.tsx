@@ -30,10 +30,13 @@ export default function SignIn() {
         if (query.get('registered') === 'true') {
             toast.success('Registration successful! You can now sign in.'); 
         }
+        if (query.get('logout') === 'true') {
+            toast.success('Successfully logged out!');
+        }
     }, [location]);
 
     const handleBack = () => {
-        navigate(-1);  
+        navigate("/");
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
