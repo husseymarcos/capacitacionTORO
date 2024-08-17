@@ -1,41 +1,59 @@
+/* Todos.css */
+
 .container {
-    margin-top: 20px;
     max-width: 600px;
+    margin: auto;
+    padding: 16px;
 }
 
-.form-container {
-    margin-bottom: 30px;
-}
-
-.text-field {
-    margin-bottom: 15px;
-}
-
-.submit-button {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-}
-
-.todo-list {
-    margin-top: 20px;
-}
-
-.list-item {
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-.list-item:hover {
-    background-color: #f1f1f1;
-}
-
-.title {
+.header {
+    font-size: 6rem; /* Make it much larger */
     font-weight: bold;
+    margin-top: 60px; /* Adjust as needed */
+    margin-bottom: 24px; /* Maintain spacing below */
+    text-align: left; /* Align text to the left */
 }
 
-.description {
-    color: #777;
+
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.addButton, .logoutButton {
+    color: #3f51b5; /* Primary color */
+}
+
+.logoutButton {
+    color: #f44336; /* Secondary color */
+}
+
+.emptyListMessage {
+    text-align: center;
+    margin-top: 16px;
+    color: #757575; /* Text color for empty state */
+}
+
+.todoList {
+    margin-top: 16px;
+}
+
+.todoItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todoItemText {
+    flex-grow: 1;
+}
+
+.deleteButton, .editButton {
+    color: #f44336; /* Error color */
+}
+
+.editButton {
+    color: #3f51b5; /* Primary color */
 }

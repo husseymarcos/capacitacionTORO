@@ -18,6 +18,7 @@ import { jwtDecode } from 'jwt-decode';
 import { JwtPayload, Todo, User } from '../../services/types';
 import TodoForm from './TodoForm';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Todos.css';
 
 export default function Todos() {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -133,7 +134,7 @@ export default function Todos() {
 
     if (loading) {
         return (
-          <Container component="main" maxWidth="sm">
+          <Container component="main" className="container">
               <Box display="flex" justifyContent="center" mt={4}>
                   <CircularProgress />
               </Box>
@@ -143,7 +144,7 @@ export default function Todos() {
 
     if (error) {
         return (
-          <Container component="main" maxWidth="sm">
+          <Container component="main" className="container">
               <Typography variant="h6" color="error" align="center" mt={4}>
                   {error}
               </Typography>
@@ -152,49 +153,60 @@ export default function Todos() {
     }
 
     return (
-      <Container component="main" maxWidth="sm">
-          <Typography component="h1" variant="h5" align="center" gutterBottom>
-              Hello, {user?.name || 'User'}
-          </Typography>
+      <Container component="main" className="container">
+          <Box>
+              <Typography component="h2" className="header">
+                  Hello, {user?.name || 'User'}
+              </Typography>
 
-          <Box display="flex" justifyContent="space-between" mb={2}>
-              <IconButton onClick={handleToggleForm}>
-                  <AddIcon />
-              </IconButton>
-              <IconButton onClick={handleLogout}>
-                  <LogoutIcon />
-              </IconButton>
+              <Box className="buttonGroup">
+                  <IconButton className="addButton" onClick={handleToggleForm}>
+                      <AddIcon />
+                  </IconButton>
+                  <IconButton className="logoutButton" onClick={handleLogout}>
+                      <LogoutIcon />
+                  </IconButton>
+              </Box>
+
+              {isFormVisible && (
+                <TodoForm
+                  onCreate={handleCreateTodo}
+                  onEdit={handleEditTodo}
+                  editingTodo={editingTodo}
+                  userId={user?.id || 0}
+                  onClose={() => setIsFormVisible(false)} // Pass onClose prop
+                />
+              )}
+
+              {todos.length === 0 ? (
+                <Box className="emptyListMessage">
+                    <Typography variant="body1">
+                        Your todo list is empty. Click the "+" button to create a new todo.
+                    </Typography>
+                </Box>
+              ) : (
+                <List className="todoList">
+                    {todos.map((todo) => (
+                      <ListItem key={todo.id} className="todoItem" divider>
+                          <ListItemText
+                            primary={todo.title}
+                            secondary={`${todo.description} - Completed: ${todo.completed ? 'Yes' : 'No'}`}
+                            className="todoItemText"
+                          />
+                          <IconButton className="deleteButton" onClick={() => handleDeleteTodo(todo.id)}>
+                              <DeleteIcon />
+                          </IconButton>
+                          <IconButton className="editButton" onClick={() => {
+                              setEditingTodo(todo);
+                              handleToggleForm();
+                          }}>
+                              <EditIcon />
+                          </IconButton>
+                      </ListItem>
+                    ))}
+                </List>
+              )}
           </Box>
-
-          {isFormVisible && (
-            <TodoForm
-              onCreate={handleCreateTodo}
-              onEdit={handleEditTodo}
-              editingTodo={editingTodo}
-              userId={user?.id || 0}
-              onClose={() => setIsFormVisible(false)} // Pass onClose prop
-            />
-          )}
-
-          <List>
-              {todos.map((todo) => (
-                <ListItem key={todo.id} divider>
-                    <ListItemText
-                      primary={todo.title}
-                      secondary={`${todo.description} - Completed: ${todo.completed ? 'Yes' : 'No'}`}
-                    />
-                    <IconButton onClick={() => handleDeleteTodo(todo.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton onClick={() => {
-                        setEditingTodo(todo);
-                        handleToggleForm();
-                    }}>
-                        <EditIcon />
-                    </IconButton>
-                </ListItem>
-              ))}
-          </List>
 
           <ToastContainer position="top-center" />
       </Container>
