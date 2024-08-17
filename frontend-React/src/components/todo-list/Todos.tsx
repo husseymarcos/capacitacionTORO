@@ -18,7 +18,7 @@ interface Todo {
 }
 
 interface JwtPayload {
-    id: number;
+    userId: number;
     email: string;
 }
 
@@ -35,11 +35,10 @@ export default function Todos() {
                 if (!token) {
                     throw new Error('User not authenticated');
                 }
-                
+                                
                 const decoded: JwtPayload = jwtDecode(token)
-                console.log(decoded)
-                const userId = decoded.id;                
-                console.log('UserId:' + userId)
+
+                const userId = decoded.userId;
                 
                 const response = await getUserTodos(userId, token);
                 setTodos(response); 

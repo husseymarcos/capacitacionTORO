@@ -10,7 +10,6 @@ import { RegisterDto } from './dto/register.dto';
 import { User } from '../users/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { validate } from 'class-validator';
-import { identity } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -33,31 +32,22 @@ export class AuthService {
     const existingUser = await this.usersService.findByEmail(
       createUserDto.email,
     );
-
     if (existingUser) {
       throw new ConflictException('Email is already registered');
     }
 
-    const user = new User(createUserDto);
-    return await this.userRepository.create(user);
+    return await this.userRepository.create(createUserDto);
   }
 
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findByEmail(email);
-    console.log("User: " + user)
-
     const userPassword = user?.password;
 
     if (userPassword !== pass) {
       throw new UnauthorizedException();
     }
 
-    console.log(user.id)
-    console.log(user.get('id'))
-    console.log(user.getDataValue('id'))
-
-
-    const payload = { id: user.get('id'), email: user.email };
+    const payload = { userId: user.id, email: user.email };
 
     console.log('Signing in with payload:', payload);
 
