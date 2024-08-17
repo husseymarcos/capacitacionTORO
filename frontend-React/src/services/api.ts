@@ -41,14 +41,10 @@ interface CreateTodoDto {
 }
 
 export const createTodo = async (data: CreateTodoDto, token: string) => {
-    try {
-        const response = await axios.post('/api/todos/create', data, {
+    const response = await api.post('/todos/create', data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to create todo');
-    }
+    return response.data;
 };
