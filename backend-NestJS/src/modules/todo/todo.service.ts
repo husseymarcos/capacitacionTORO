@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Todo } from './todo.entity';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -18,14 +18,25 @@ export class TodoService {
     });
   }
 
-  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    const todo = await this.todoModel.findByPk(id);
-    return todo.update(updateTodoDto);
+  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo | null> {
+    const [numberOfAffectedRows] = await this.todoModel.update(updateTodoDto, {
+      where: { id },
+    });
+
+    if (numberOfAffectedRows > 0) {
+      return this.todoModel.findByPk(id);
+    } else {
+      return null;
+    }
   }
 
   async delete(id: number): Promise<void> {
-    await this.todoModel.destroy({
+    const numberOfDeletedRows = await this.todoModel.destroy({
       where: { id },
     });
+
+    if (numberOfDeletedRows === 0) {
+      throw new NotFoundException(`Todo with ID ${id} not found`);
+    }
   }
 }

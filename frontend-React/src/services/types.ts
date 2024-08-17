@@ -11,6 +11,7 @@ export interface JwtPayload {
 }
 
 export interface CreateTodoDto {
+  id: number;
   title: string;
   description?: string;
   completed: boolean;

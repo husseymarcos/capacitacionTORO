@@ -38,7 +38,7 @@ export const createTodo = async (data: CreateTodoDto, token: string) => {
 };
 
 export const updateTodo = async (id: number, data: Partial<CreateTodoDto>, token: string) => {
-    const response = await api.put(`/todos/edit`, data, {
+    const response = await api.put(`/todos/${id}`, data, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -50,7 +50,7 @@ export const updateTodo = async (id: number, data: Partial<CreateTodoDto>, token
 };
 
 export const deleteTodo = async (id: number, token: string) => {
-    const response = await api.delete(`/todos/delete`, {
+    const response = await api.delete(`/todos/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

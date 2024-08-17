@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   Request,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from './todo.entity';
@@ -28,16 +29,28 @@ export class TodoController {
     return await this.todoService.findByUser(userId);
   }
 
-  @Put('/edit')
+  @Put(':id')
   async updateTodo(
     @Param('id') id: number,
     @Body() updateTodoDto: UpdateTodoDto,
   ): Promise<Todo> {
-    return await this.todoService.update(id, updateTodoDto);
+    const todo = await this.todoService.update(id, updateTodoDto);
+    if (!todo) {
+      throw new NotFoundException(`Todo with ID ${id} not found`);
+    }
+    return todo;
   }
 
-  @Delete('/delete')
+  @Delete(':id')
   async deleteTodo(@Param('id') id: number): Promise<void> {
-    await this.todoService.delete(id);
+    try {
+      await this.todoService.delete(id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      } else {
+        throw new Error('An unexpected error occurred');
+      }
+    }
   }
 }

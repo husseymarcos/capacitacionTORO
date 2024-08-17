@@ -40,7 +40,6 @@ export default function Todos() {
                 const userDetails = await getUserDetails(userId, token);
                 setUser(userDetails);
 
-                // Fetch user todos
                 const response = await getUserTodos(userId, token);
                 setTodos(response);
             } catch (error: unknown) {
