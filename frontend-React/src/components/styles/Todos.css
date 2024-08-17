@@ -42,13 +42,17 @@
 
 .todoItem {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
 .todoItemText {
     flex-grow: 1;
 }
+
+.MuiCheckbox-root {
+    margin-left: auto;
+}
+
 
 .deleteButton, .editButton {
     color: #f44336; /* Error color */

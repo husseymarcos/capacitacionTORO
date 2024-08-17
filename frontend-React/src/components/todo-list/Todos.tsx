@@ -19,6 +19,8 @@ import { JwtPayload, Todo, User } from '../../services/types';
 import TodoForm from './TodoForm';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Todos.css';
+import { Checkbox } from '@mui/material';
+import { blue } from '@mui/material/colors';
 
 export default function Todos() {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -190,9 +192,19 @@ export default function Todos() {
                       <ListItem key={todo.id} className="todoItem" divider>
                           <ListItemText
                             primary={todo.title}
-                            secondary={`${todo.description} - Completed: ${todo.completed ? 'Yes' : 'No'}`}
+                            secondary={todo.description}
                             className="todoItemText"
+                            secondaryTypographyProps={{ component: 'div' }}
                           />
+                          <Checkbox
+                            checked={todo.completed}
+                            color="primary"
+                            sx={{
+                                '&.Mui-checked': { color: todo.completed ? blue[500] : 'default' }
+                            }}
+                            disabled
+                          />
+
                           <IconButton className="deleteButton" onClick={() => handleDeleteTodo(todo.id)}>
                               <DeleteIcon />
                           </IconButton>
