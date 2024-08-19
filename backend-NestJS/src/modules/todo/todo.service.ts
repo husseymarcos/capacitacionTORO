@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Todo } from './todo.entity';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -6,37 +6,37 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @Injectable()
 export class TodoService {
-
   constructor(@InjectModel(Todo) private readonly todoModel: typeof Todo) {}
 
-    async create(createTodoDto: CreateTodoDto): Promise<Todo> {
-      return this.todoModel.create({
-        title: createTodoDto.title,
-        description: createTodoDto.description,
-        completed: createTodoDto.completed ?? false,
-        dueDate: createTodoDto.dueDate,
-        userId: createTodoDto.userId,
+  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+    return this.todoModel.create(createTodoDto);
+  }
+
+  async findByUser(userId: number): Promise<Todo[]> {
+    return this.todoModel.findAll({
+      where: { userId },
     });
-      }
+  }
 
+  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo | null> {
+    const [numberOfAffectedRows] = await this.todoModel.update(updateTodoDto, {
+      where: { id },
+    });
 
-    async findByUser(userId: number): Promise<Todo[]> {
-      return this.todoModel.findAll({
-            where: { userId }
-        });
+    if (numberOfAffectedRows > 0) {
+      return this.todoModel.findByPk(id);
+    } else {
+      return null;
     }
-
-
-    async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-      const todo = await this.todoModel.findByPk(id);
-      return todo.update(updateTodoDto);
   }
 
   async delete(id: number): Promise<void> {
-      this.todoModel.destroy({
-          where: { id }
-      });
-  }
+    const numberOfDeletedRows = await this.todoModel.destroy({
+      where: { id },
+    });
 
-    
+    if (numberOfDeletedRows === 0) {
+      throw new NotFoundException(`Todo with ID ${id} not found`);
+    }
+  }
 }

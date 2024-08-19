@@ -30,26 +30,36 @@ export default function SignIn() {
         if (query.get('registered') === 'true') {
             toast.success('Registration successful! You can now sign in.'); 
         }
+        if (query.get('logout') === 'true') {
+            toast.success('Successfully logged out!');
+        }
     }, [location]);
 
     const handleBack = () => {
-        navigate(-1);  
+        navigate("/");
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
-
+    
         try {
+
             const response = await signIn({ email, password });
-            toast.success('Sign in successful!');
-            navigate('/home'); // Adjust the path as needed
+    
+            const { access_token } = response.data;
+
+            localStorage.setItem('jwtToken', access_token);
+                
+            navigate('/todo-list');
+
         } catch (error) {
             toast.error('Sign in failed. Please check your credentials.');
         } finally {
             setLoading(false);
         }
     };
+    
 
     return (
       <ThemeProvider theme={defaultTheme}>

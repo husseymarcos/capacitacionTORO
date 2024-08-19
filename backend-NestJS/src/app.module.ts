@@ -18,7 +18,7 @@ import { Todo } from './modules/todo/todo.entity';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET_KEY'),
-        signOptions: { expiresIn: '60m' }, 
+        signOptions: { expiresIn: '2 days' },
       }),
     }),
     SequelizeModule.forRoot({
@@ -29,13 +29,13 @@ import { Todo } from './modules/todo/todo.entity';
       password: '123',
       database: 'postgres',
       ssl: false,
-      models: [User,Todo],
+      models: [User, Todo],
       autoLoadModels: true,
       synchronize: true,
     }),
     UserModule,
     AuthModule,
-    TodoModule
+    TodoModule,
   ],
   providers: [],
 })

@@ -32,28 +32,27 @@ export class AuthService {
     const existingUser = await this.usersService.findByEmail(
       createUserDto.email,
     );
-
     if (existingUser) {
       throw new ConflictException('Email is already registered');
     }
 
-    const user = new User(createUserDto);
-    return await this.userRepository.create(user);
+    return await this.userRepository.create(createUserDto);
   }
 
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findByEmail(email);
-
     const userPassword = user?.password;
 
     if (userPassword !== pass) {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { userId: user.id, email: user.email };
+
+    console.log('Signing in with payload:', payload);
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: this.jwtService.sign(payload),
     };
   }
 }

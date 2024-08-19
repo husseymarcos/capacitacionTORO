@@ -1,7 +1,20 @@
-import { IsString, IsOptional, IsBoolean, IsDate, IsNotEmpty, IsInt, MinLength, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsInt,
+  MinLength,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateTodoDto {
+  @IsInt()
+  @IsNotEmpty()
+  readonly userId: number;
+
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -21,8 +34,4 @@ export class CreateTodoDto {
   @IsOptional()
   @Type(() => Date)
   readonly dueDate?: Date;
-
-  @IsInt()
-  @IsNotEmpty()
-  readonly userId: number;
 }

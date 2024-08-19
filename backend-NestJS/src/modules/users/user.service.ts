@@ -9,7 +9,15 @@ export class UserService {
     private usersRepository: typeof User,
   ) {}
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { email } });
+  async findByEmail(emailToFind: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({
+      where: {
+        email: emailToFind,
+      },
+    });
+  }
+
+  async findById(userId: number): Promise<User | null> {
+    return this.usersRepository.findByPk(userId);
   }
 }
